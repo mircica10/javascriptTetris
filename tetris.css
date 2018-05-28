@@ -1,0 +1,28 @@
+body {
+	background-color: white;	
+}
+
+.patrat {
+	width: 18px;
+    height: 18px;	
+	display: inline-block;
+	margin: 1px;	
+}
+
+.culoarePatrat {
+	background-color: blue;
+}
+
+.tetrisBackground {
+	width: 200px;
+	height: 320px;
+	background-color: white;
+}
+
+.partePiesa {
+    background-color: red;	
+}
+
+.parteZid {
+	background-color: green;	
+}
