@@ -1,0 +1,77 @@
+(function(emModule){
+    
+  
+  var find = function(){
+    //state
+    let minimalSteps = "minimum number of counters:";
+    let prevSteps = "";
+  	let memo = [Math.max, Number.MAX_VALUE, Number.MAX_VALUE, 1, Number.MAX_VALUE, 1];
+    let value = document.getElementById("searchedCounter").value;
+  
+    let prevValues = function(sir){
+      let previousValues = "";
+    
+      if(sir[sir.length - 1] === Number.MAX_VALUE || sir[sir.length - 1] === 'undefined'){
+        previousValues = previousValues + ' N/A';
+        return previousValues;
+      }
+      
+      let index = sir.length - 1;
+      if(isNaN(index)){
+        return previousValues;
+      }
+      while(sir[index] >= 1){
+        previousValues = index + " " + previousValues;
+        if(sir[index] === 1){
+          break;
+        }
+        if( index - 5 >= 0 && index % 3 === 0 && 
+            sir[index - 5] < Number.MAX_VALUE && sir[index / 3] < Number.MAX_VALUE) {
+          index = sir[index - 5] > sir[index / 3] ? (index / 3) : (index - 5);
+        } else if (index - 5 >= 0 && sir[index - 5] < Number.MAX_VALUE){
+          index = index - 5;
+        } else if (index % 3 === 0 && sir[index / 3] < Number.MAX_VALUE){
+          index = index / 3;
+        } else {
+          break;
+        }
+      }
+      return "previous values:" + previousValues;
+    };
+  
+    let findHelp = function (counterNumber) {
+      if(counterNumber < 0){
+        return -1;
+      } else if(counterNumber < 6){
+          return memo[counterNumber];
+      } else {
+        for(let i = 6; i <= counterNumber; ++i){
+          if(memo[i - 5] < Number.MAX_VALUE && (i % 3) === 0 ){
+            memo.push( Math.min(memo[i - 5], memo[i / 3] ) + 1);
+          } else if(memo[i - 5] < Number.MAX_VALUE) {
+            memo.push(memo[i - 5] + 1);
+          } else if (i % 3 === 0) {
+            memo.push(memo[i / 3] + 1);
+          } else {
+            memo.push(Number.MAX_VALUE);
+          }
+        }
+        return memo[counterNumber];
+      }  
+    };
+    
+    if(isNaN(value)){
+      minimalSteps = 'is not a number';
+    } else {
+      let val = findHelp(value);
+      minimalSteps = 'minimal steps:' + val;
+      let prev = prevValues(memo);
+      prevSteps = prev;
+    }
+    document.getElementById("root").innerHTML = minimalSteps;
+    document.getElementById("prevValues").innerHTML = prevSteps;
+  }
+  //add to window
+  emModule.find = find;
+  
+}(window));

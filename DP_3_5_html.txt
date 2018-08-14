@@ -1,0 +1,16 @@
+<html>
+<body>
+
+<fieldset>
+<legend>
+DP Counter
+</legend>
+<input type = "input" id="searchedCounter" onkeyup="window.find()"/>
+<div id = "root"></div>
+<div id = "prevValues"></div>
+
+</fieldset>
+
+
+</body>
+</html>
